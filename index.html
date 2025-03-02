@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras - 7DayCode</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos para a explicação abaixo */
+        .explicacao {
+            width: 100%;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-top: 1px solid #ddd;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+            margin-top: 40px;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Minha Lista de Compras</h1>
+
+        <!-- Tabela para exibir a lista de compras -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Categoria</th>
+                    <th>Itens</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="listaCompras"></tbody>
+        </table>
+
+        <!-- Menu de categoria -->
+        <section>
+            <h2>Adicionar Itens à Lista</h2>
+            <form id="formAdicionarItem">
+                <label for="item">Qual comida você deseja inserir?</label>
+                <input type="text" id="item" required>
+                
+                <label for="categoria">Escolha a categoria</label>
+                <select id="categoria">
+                    <option value="frutas">Frutas</option>
+                    <option value="laticinios">Laticínios</option>
+                    <option value="congelados">Congelados</option>
+                    <option value="doces">Doces</option>
+                    <option value="carboidratos">Carboidratos</option>
+                </select>
+
+                <button type="submit">Adicionar à Lista</button>
+            </form>
+        </section>
+
+        <h2>Se preferir, você pode abrir o console para ver os resultados</h2>
+        <p>Pressione F12 ou clique com o botão direito e selecione "Inspecionar" para abrir o console.</p>
+
+        <!-- Rodapé -->
+        <footer>
+            <p>Desenvolvido por Paulo Maia</p>
+        </footer>
+    </div>
+
+    <!-- Explicação e código do JS abaixo -->
+    <div class="explicacao">
+        <h3>Explicação do Código:</h3>
+        <p>Este código cria uma lista de compras onde o usuário pode adicionar itens a categorias específicas como frutas, laticínios, congelados, doces e carboidratos. Cada item inserido pode ser excluído com um botão ao lado dele. A lista é exibida em uma tabela na parte superior da página.</p>
+        
+        <h3>Fonte do arquivo JS:</h3>
+        <pre>
+            <code>
+                // Criação das categorias como arrays vazios
+                let frutas = [];
+                let laticinios = [];
+                let congelados = [];
+                let doces = [];
+                let carboidratos = [];
+
+                // Função para adicionar itens às categorias
+                function adicionarItem() {
+                    let resposta = prompt("Você deseja adicionar uma comida à sua lista? (sim ou não)").toLowerCase();
+                    if (resposta === "sim") {
+                        let item = prompt("Qual comida você deseja inserir?");
+                        let categoria = prompt("Em qual categoria essa comida se encaixa? (frutas, laticínios, congelados, doces, carboidratos)").toLowerCase();
+
+                        // Verifica a categoria e adiciona o item
+                        if (categoria === "frutas") {
+                            frutas.push(item);
+                        } else if (categoria === "laticínios") {
+                            laticinios.push(item);
+                        } else if (categoria === "congelados") {
+                            congelados.push(item);
+                        } else if (categoria === "doces") {
+                            doces.push(item);
+                        } else if (categoria === "carboidratos") {
+                            carboidratos.push(item);
+                        } else {
+                            alert("Categoria não reconhecida. Tente novamente.");
+                        }
+
+                        // Chama novamente a função para adicionar mais itens
+                        adicionarItem();
+                    } else if (resposta === "não") {
+                        // Exibe a lista agrupada quando o usuário não deseja adicionar mais itens
+                        mostrarLista();
+                    } else {
+                        alert("Resposta inválida! Por favor, digite 'sim' ou 'não'.");
+                        adicionarItem(); // Chama novamente em caso de resposta inválida
+                    }
+                }
+
+                // Função para exibir a lista agrupada na tabela
+                function mostrarLista() {
+                    const listaTabela = document.getElementById("listaCompras");
+                    listaTabela.innerHTML = ""; // Limpa a tabela antes de adicionar os novos dados
+
+                    // Adiciona as categorias e seus itens na tabela
+                    if (frutas.length > 0) {
+                        let row = listaTabela.insertRow();
+                        row.insertCell(0).textContent = "Frutas";
+                        row.insertCell(1).textContent = frutas.join(", ");
+                    }
+                    if (laticinios.length > 0) {
+                        let row = listaTabela.insertRow();
+                        row.insertCell(0).textContent = "Laticínios";
+                        row.insertCell(1).textContent = laticinios.join(", ");
+                    }
+                    if (congelados.length > 0) {
+                        let row = listaTabela.insertRow();
+                        row.insertCell(0).textContent = "Congelados";
+                        row.insertCell(1).textContent = congelados.join(", ");
+                    }
+                    if (doces.length > 0) {
+                        let row = listaTabela.insertRow();
+                        row.insertCell(0).textContent = "Doces";
+                        row.insertCell(1).textContent = doces.join(", ");
+                    }
+                    if (carboidratos.length > 0) {
+                        let row = listaTabela.insertRow();
+                        row.insertCell(0).textContent = "Carboidratos";
+                        row.insertCell(1).textContent = carboidratos.join(", ");
+                    }
+                }
+
+                // Chama a função para iniciar a adição de itens
+                adicionarItem();
+            </code>
+        </pre>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+
+
+
