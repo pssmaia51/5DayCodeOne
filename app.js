@@ -3,7 +3,8 @@ let frutas = [];
 let laticinios = [];
 let congelados = [];
 let doces = [];
-let carboidratos = [];  // Corrigido a ortografia de "carboitrados" para "carboidratos"
+let carboidratos = [];
+let outros = [];
 
 // Função para adicionar itens às categorias
 function adicionarItem(event) {
@@ -23,6 +24,8 @@ function adicionarItem(event) {
         doces.push(item);
     } else if (categoria === "carboidratos") {
         carboidratos.push(item);
+    } else if (categoria === "outros") {
+        outros.push(item);
     }
 
     // Limpa o campo de item após a adição
@@ -37,42 +40,24 @@ function mostrarLista() {
     const listaTabela = document.getElementById("listaCompras");
     listaTabela.innerHTML = ""; // Limpa a tabela antes de adicionar os novos dados
 
-    // Adiciona as categorias e seus itens na tabela
-    if (frutas.length > 0) {
-        let row = listaTabela.insertRow();
-        row.insertCell(0).textContent = "Frutas";
-        row.insertCell(1).textContent = frutas.join(", ");
-        let deleteCell = row.insertCell(2);
-        deleteCell.innerHTML = `<button onclick="removerItem('frutas', ${frutas.length - 1})">Excluir</button>`;
+    function criarLinha(categoria, lista) {
+        if (lista.length > 0) {
+            let row = listaTabela.insertRow();
+            row.insertCell(0).textContent = categoria;
+            row.insertCell(1).textContent = lista.join(", ");
+            let deleteCell = row.insertCell(2);
+            deleteCell.innerHTML = lista.map((item, index) => 
+                `<button onclick="removerItem('${categoria.toLowerCase()}', ${index})">Excluir ${item}</button>`
+            ).join(" ");
+        }
     }
-    if (laticinios.length > 0) {
-        let row = listaTabela.insertRow();
-        row.insertCell(0).textContent = "Laticínios";
-        row.insertCell(1).textContent = laticinios.join(", ");
-        let deleteCell = row.insertCell(2);
-        deleteCell.innerHTML = `<button onclick="removerItem('laticinios', ${laticinios.length - 1})">Excluir</button>`;
-    }
-    if (congelados.length > 0) {
-        let row = listaTabela.insertRow();
-        row.insertCell(0).textContent = "Congelados";
-        row.insertCell(1).textContent = congelados.join(", ");
-        let deleteCell = row.insertCell(2);
-        deleteCell.innerHTML = `<button onclick="removerItem('congelados', ${congelados.length - 1})">Excluir</button>`;
-    }
-    if (doces.length > 0) {
-        let row = listaTabela.insertRow();
-        row.insertCell(0).textContent = "Doces";
-        row.insertCell(1).textContent = doces.join(", ");
-        let deleteCell = row.insertCell(2);
-        deleteCell.innerHTML = `<button onclick="removerItem('doces', ${doces.length - 1})">Excluir</button>`;
-    }
-    if (carboidratos.length > 0) {
-        let row = listaTabela.insertRow();
-        row.insertCell(0).textContent = "Carboidratos";
-        row.insertCell(1).textContent = carboidratos.join(", ");
-        let deleteCell = row.insertCell(2);
-        deleteCell.innerHTML = `<button onclick="removerItem('carboidratos', ${carboidratos.length - 1})">Excluir</button>`;
-    }
+
+    criarLinha("Frutas", frutas);
+    criarLinha("Laticínios", laticinios);
+    criarLinha("Congelados", congelados);
+    criarLinha("Doces", doces);
+    criarLinha("Carboidratos", carboidratos);
+    criarLinha("Outros", outros);
 }
 
 // Função para remover um item da categoria
@@ -87,6 +72,8 @@ function removerItem(categoria, index) {
         doces.splice(index, 1);
     } else if (categoria === "carboidratos") {
         carboidratos.splice(index, 1);
+    } else if (categoria === "outros") {
+        outros.splice(index, 1);
     }
 
     // Atualiza a tabela após a remoção
@@ -95,4 +82,3 @@ function removerItem(categoria, index) {
 
 // Adiciona o evento de submissão do formulário
 document.getElementById("formAdicionarItem").addEventListener("submit", adicionarItem);
-

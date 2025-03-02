@@ -57,14 +57,13 @@
                     <option value="congelados">Congelados</option>
                     <option value="doces">Doces</option>
                     <option value="carboidratos">Carboidratos</option>
+                    <option value="outros">Outros</option>
+                </select>
                 </select>
 
                 <button type="submit">Adicionar à Lista</button>
             </form>
-        </section>
-
-        <h2>Se preferir, você pode abrir o console para ver os resultados</h2>
-        <p>Pressione F12 ou clique com o botão direito e selecione "Inspecionar" para abrir o console.</p>
+        </section>        
 
         <!-- Rodapé -->
         <footer>
@@ -86,6 +85,7 @@
                 let congelados = [];
                 let doces = [];
                 let carboidratos = [];
+                let outros = [];
 
                 // Função para adicionar itens às categorias
                 function adicionarItem() {
@@ -105,6 +105,8 @@
                             doces.push(item);
                         } else if (categoria === "carboidratos") {
                             carboidratos.push(item);
+                        } else if (categoria === "outros") {
+                            outros.push(item);
                         } else {
                             alert("Categoria não reconhecida. Tente novamente.");
                         }
@@ -151,6 +153,11 @@
                         row.insertCell(0).textContent = "Carboidratos";
                         row.insertCell(1).textContent = carboidratos.join(", ");
                     }
+                    if (outros.length > 0) {
+                      let row = listaTabela.insertRow();
+                      row.insertCell(0).textContent = "Outros";
+                      row.insertCell(1).textContent = outros.join(", ");
+                  }
                 }
 
                 // Chama a função para iniciar a adição de itens
